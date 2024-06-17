@@ -846,7 +846,9 @@ class mainWindow:
                 self.wwwLoko = f'https://www.google.com/search?q="{nn}"'
             self.lokoVes = df.at[idx,'weight']
             self.calcVagsData()
-            self.paramsLoko = pd.DataFrame([[lok_name, df.at[idx,'weight'], df.at[idx,'axles'], df.at[idx,'force'], 0]],
+            self.paramsLoko = pd.DataFrame([[lok_name, df.at[idx,'weight'], 
+                                             df.at[idx,'axles'], 
+                                             df.at[idx,'force'], 0]],
         				  columns=['name','massa','axles','force','pads'])
             top.destroy()
 
