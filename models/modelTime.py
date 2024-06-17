@@ -21,6 +21,7 @@ import tkinter as tk
 from tkinter import ttk
 import models
 from models.dopFunc import getFmt as getFmt
+from models.dopFunc import get_eps_by_name as get_eps_by_name
 from models.dopFunc import CalcPress as CalcPress
 from models.dopFunc import calcKnt as calcKnt
 
@@ -53,6 +54,7 @@ class modelTime:
         self.wox = 0.0
         self.c = 0.0
         self.Ploc = parLoko['massa'][0]
+        self.eps = get_eps_by_name(parLoko['name'][0])
         self.Pvag = 0.0
         self.nOSv = 0
         self.df_rezult = 0
@@ -132,7 +134,6 @@ class modelTime:
         Scur = 0.0
         Vcur = v
         dt = self.interval
-        Eps = 120.0
         # подготовка таблиц с результатами
         res = pd.DataFrame(columns=['Vst','Ven','Vmid','Fikp','bT',
                                     'wox','ic','c','St','t'])
@@ -160,7 +161,7 @@ class modelTime:
            bT = round(1000.0 * sum([self.Teta[i] *
                           self.calcFi(i, Vcur) for i in range(3)]),1)
            kk = CalcPress(tCur+dt/2.0, self.lenght)
-           dV = Eps*(bT*kk/100.0+w+self.ic)/3600.0*dt
+           dV = self.eps*(bT*kk/100.0+w+self.ic)/3600.0*dt
            if dV > Vcur:
                dt = dt * Vcur / (Vcur + dV)
                dV = Vcur

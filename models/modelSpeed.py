@@ -20,6 +20,7 @@ import numpy as np
 
 import models
 from models.dopFunc import getFmt as getFmt
+from models.dopFunc import get_eps_by_name as get_eps_by_name
 
 import tkinter as tk
 from tkinter import ttk
@@ -47,6 +48,7 @@ class modelSpeed:
         self.wox = 0.0
         self.c = 0.0
         self.Ploc = parLoko['massa'][0]
+        self.eps = get_eps_by_name(parLoko['name'][0])
         self.Pvag = 0.0
         self.nOSv = 0
         self.df_rezult = 0
@@ -149,8 +151,7 @@ class modelSpeed:
            res.at[idx,'wox'] = stp.at[0,'wox']
            res.at[idx,'ic'] = stp.at[0,'ic']
            res.at[idx,'c'] = stp.at[0,'c']
-           eps = 120
-           St = round(500.0 / eps *(row['Vst']**2 - row['Ven']**2)/stp.at[0,'c'] ,1)
+           St = round(500.0 / self.eps *(row['Vst']**2 - row['Ven']**2)/stp.at[0,'c'] ,1)
            res.at[idx,'St'] = St
            res.at[idx,'t'] = round(St/row['Vmid']*3.6,1)
         stp = self.calcSp(V0)

@@ -22,6 +22,7 @@ import tkinter as tk
 from tkinter import ttk
 
 from models.dopFunc import getFmt as getFmt
+from models.dopFunc import get_eps_by_name as get_eps_by_name
 from models.dopFunc import CalcPress as CalcPress
 from models.dopFunc import calcKnt as calcKnt
 from models.rkf import rkf as rkf
@@ -55,6 +56,7 @@ class modelInvertTimeRKF:
         self.wox = 0.0
         self.c = 0.0
         self.Ploc = parLoko['massa'][0]
+        self.eps = get_eps_by_name(parLoko['name'][0])
         self.Pvag = 0.0
         self.nOSv = 0
         self.df_rezult = 0
@@ -137,10 +139,9 @@ class modelInvertTimeRKF:
             x,v = u
             dx = v / 3.6 # км/ч => m/c
             w, bT = forces(t,v)
-            dv = - Eps*(bT+w+self.ic)/3600.0 # m/с^2 => (км/ч)/c
+            dv = - self.eps*(bT+w+self.ic)/3600.0 # m/с^2 => (км/ч)/c
             return np.array([dx,dv], dtype='f8')
 
-        Eps = 120.0
         res = pd.DataFrame(columns=['Tst','Ten','Vst','Ven','Vmid','Fikp','bT',
                                     'wox','ic','c','St','t'])
         res2 = pd.DataFrame(columns=['all_vag','all_axes','all_massa','full_massa','full_len',
