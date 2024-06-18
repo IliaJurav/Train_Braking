@@ -844,11 +844,11 @@ class mainWindow:
             if type(self.wwwLoko) != str:
                 nn = df.at[idx,'name']
                 self.wwwLoko = f'https://www.google.com/search?q="{nn}"'
-            self.lokoVes = df.at[idx,'weight']
+            self.lokoVes = float(loko_massa.get())
             self.calcVagsData()
-            self.paramsLoko = pd.DataFrame([[lok_name, df.at[idx,'weight'], 
-                                             df.at[idx,'axles'], 
-                                             df.at[idx,'force'], 0]],
+            self.paramsLoko = pd.DataFrame([[lok_name, float(loko_massa.get()), 
+                                             int(loko_axes.get()), 
+                                             float(loko_force.get()), 0]],
         				  columns=['name','massa','axles','force','pads'])
             top.destroy()
 
