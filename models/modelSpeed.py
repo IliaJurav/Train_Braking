@@ -95,8 +95,10 @@ class modelSpeed:
         # формулы
         # (53) основное удельное сопротивление поезда
         def calcWox(v):
-           qo = self.Pvag / self.nOSv # средняя нагрузка оси вагона на рельсы
            def Wo(v):
+               if self.nOSv == 0:
+                   return 0.0
+               qo = self.Pvag / self.nOSv # средняя нагрузка оси вагона на рельсы
                if self.passenger:
                # (57) удельное сопротивление пассажирских вагонов
                    return 1.2 + 0.012 * v + 0.0002 * v * v

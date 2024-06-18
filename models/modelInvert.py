@@ -97,8 +97,10 @@ class modelInvertTimeRKF:
 
         # (53) основное удельное сопротивление поезда
         def calcWox(v):
-           qo = self.Pvag / self.nOSv # средняя нагрузка оси вагона на рельсы
            def Wo(v):
+               if self.nOSv == 0:
+                   return 0.0
+               qo = self.Pvag / self.nOSv # средняя нагрузка оси вагона на рельсы
                if self.passenger:
                # (стр 5) удельное сопротивление пассажирских вагонов
                    if self.way == 0:
